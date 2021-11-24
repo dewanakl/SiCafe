@@ -12,7 +12,7 @@ Aplikasi ini dikembangkan untuk mempermudah para pemilik cafe dalam mengelola se
 - run App.java
 
 ## ERD
-<p align="center"><img src="https://raw.githubusercontent.com/dewanakl/SiCafe/main/image/sicafeerd.png" width="600"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/dewanakl/SiCafe/main/image/Erdsicafe.png" width="600"></p>
 ERD dalam database kami
 
 ## Kontributor
