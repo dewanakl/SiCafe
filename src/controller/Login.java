@@ -6,12 +6,10 @@ import config.*;
 import java.util.Scanner;
 
 public class Login {
-    protected boolean isLogin;
-    protected String nama, peran;
-    protected int idTingkat, idPengguna;
-
-    protected boolean checkAdmin;
-
+    protected String nama;
+    protected String peran;
+    protected int idTingkat;
+    protected int idPengguna;
     protected DBPgsql db;
     protected Scanner sc;
 
@@ -28,31 +26,54 @@ public class Login {
     }
 
     protected boolean loginUser(String username, String password) {
-        this.isLogin = false;
+        boolean isLogin = false;
+        this.idPengguna = 0;
+        this.nama = null;
+        this.idTingkat = 0;
+        this.peran = null;
         String query = "select pengguna.id_pengguna, pengguna.nama, tingkat.id_tingkat, tingkat.hak_akses\n"
                 + "from pengguna inner join tingkat on(pengguna.tingkat_id_tingkat = tingkat.id_tingkat)\n"
                 + "where pengguna.username = '%s' and pengguna.password = '%s'";
         query = String.format(query, username, password);
         this.db.getData(query);
         if (this.db.getListData().isEmpty()) {
-            this.isLogin = false;
+            isLogin = false;
         } else {
             this.idPengguna = Integer.valueOf(this.db.getListData().get(0).toString());
             this.nama = this.db.getListData().get(1).toString();
             this.idTingkat = Integer.valueOf(this.db.getListData().get(2).toString());
             this.peran = this.db.getListData().get(3).toString();
-            this.isLogin = true;
+            isLogin = true;
         }
-        return this.isLogin;
+        return isLogin;
     }
 
-    protected void checkAdmin() {
+    protected void setup() {
+        Fungsi.clearScreen();
+        System.out.println("Setup Aplikasi SiCafe\n");
+        System.out.println("Silahkan input nama, username, dan password\n");
+        System.out.print("Masukkan nama : ");
+        String nama = this.sc.nextLine();
+        System.out.print("Masukkan username: ");
+        String namaUser = this.sc.nextLine();
+        System.out.print("Masukkan password: ");
+        String pswd = this.sc.nextLine();
+        String query = "insert into pengguna(nama, username, password, tingkat_id_tingkat)\n"
+                + "values ('%s', '%s', '%s', 1)";
+        query = String.format(query, nama, namaUser, pswd);
+        if (this.db.CUD(query)) {
+            Fungsi.backToMenu("behasil setup !");
+        } else {
+            Fungsi.backToMenu("gagal setup !");
+        }
+    }
+
+    protected boolean checkAdmin() {
         String query = "SELECT * FROM pengguna WHERE tingkat_id_tingkat = 1";
         this.db.getData(query);
         if (this.db.getListData().size() > 0) {
-            this.checkAdmin = false;
-        } else {
-            this.checkAdmin = true;
+            return false;
         }
+        return true;
     }
 }

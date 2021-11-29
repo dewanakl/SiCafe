@@ -8,29 +8,22 @@ import model.*;
 
 public class viewAdmin extends Admin implements View {
 
-    // private int idTingkat;
-    // private int idPengguna;
     private boolean isLogout = false;
 
-    public viewAdmin(String nama, String peran) {
+    public viewAdmin() {
         super.sc = new Scanner(System.in);
         super.db = new DBPgsql();
-        super.setNama(nama);
-        super.setPeran(peran);
-        // this.idTingkat = idTingkat;
-        // this.idPengguna = idPengguna;
-        this.mainView();
+        super.nama = null;
+        super.peran = null;
     }
 
     @Override
     public void showMenu() {
         Fungsi.clearScreen();
         System.out.println("hi, " + super.nama);
-        System.out.println("Pilihan sebagai " + super.peran + "\n");
-        System.out.println("1. Karyawan ");
-        System.out.println("2. Lihat Transaksi ");
-        System.out.println("3. Lihat Daftar Menu ");
-        System.out.println("0. Logout ");
+        System.out.println("Pilihan sebagai " + super.peran);
+        System.out.println(Fungsi.repeatStr("-", 15));
+        System.out.println("1. Karyawan\n2. Lihat Transaksi\n3. Lihat Daftar Menu\n4. Profil \n5. Logout");
         System.out.print(">> ");
     }
 
@@ -46,18 +39,27 @@ public class viewAdmin extends Admin implements View {
         return input;
     }
 
-    public void mainView() {
-        while (!isLogout) {
+    // main view, void
+    public void mainView(String nama, String peran) {
+        super.setNama(nama);
+        super.setPeran(peran);
+        while (!this.isLogout) {
             showMenu();
             switch (getInput()) {
             case 1:
                 super.mainViewKaryawan();
                 break;
             case 2:
-                System.out.println("transaksi");
+                super.lihatTransaksi();
+                break;
+            case 3:
+                super.lihatDaftarMenu();
+                break;
+            case 4:
+                super.mainProfil();
                 break;
             case 5:
-                isLogout = true;
+                this.isLogout = super.isLogout();
                 break;
             default:
                 Fungsi.backToMenu("salah input !");

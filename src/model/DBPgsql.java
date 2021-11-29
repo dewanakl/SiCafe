@@ -14,18 +14,14 @@ public class DBPgsql {
     private String user = Config.DB_USER;
     private String pass = Config.DB_PASS;
     private String db_name = Config.DB_NAME;
-
     private Connection dbh;
-
     private ArrayList<String> listField;
     private ArrayList<String> listData;
 
     public DBPgsql() {
-        listField = new ArrayList<String>();
-        listData = new ArrayList<String>();
-
+        this.listField = new ArrayList<String>();
+        this.listData = new ArrayList<String>();
         String dsn = "jdbc:postgresql://" + this.host + ":5432/" + this.db_name;
-
         try {
             this.dbh = DriverManager.getConnection(dsn, this.user, this.pass);
         } catch (SQLException ex) {
@@ -33,8 +29,8 @@ public class DBPgsql {
         }
     }
 
-    // get data array, void
-    public void getData(String query) {
+    // get data array, boolean
+    public boolean getData(String query) {
         this.listData.clear();
         this.listField.clear();
         try {
@@ -48,27 +44,29 @@ public class DBPgsql {
                 for (int i = 0; i < kol; i++) {
                     String namaKol = rsmd.getColumnLabel(i + 1);
                     if (idx == 0) {
-                        listField.add(namaKol);
+                        this.listField.add(namaKol);
                     }
-                    listData.add((rs.getString(namaKol)));
+                    this.listData.add((rs.getString(namaKol)));
                 }
                 idx++;
             }
+            return true;
         } catch (SQLException ex) {
-            Fungsi.Exspetasi(ex.toString());
+            return false;
         }
     }
 
-    // create or update or delete, void
-    public void CUD(String query) {
+    // create or update or delete, boolean
+    public boolean CUD(String query) {
         this.listData.clear();
         this.listField.clear();
         try {
             PreparedStatement pst = this.dbh.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             pst.executeUpdate();
+            return true;
         } catch (SQLException ex) {
-            Fungsi.Exspetasi(ex.toString());
+            return false;
         }
     }
 

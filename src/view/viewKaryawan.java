@@ -6,52 +6,45 @@ import config.Fungsi;
 import controller.*;
 import model.*;
 
-public class viewKaryawan implements View {
+public class viewKaryawan extends Karyawan implements View {
 
-    private String nama;
-    private String peran;
-
-    private int idTingkat;
-    private int idPengguna;
     private boolean isLogout = false;
 
-    public viewKaryawan(String nama, String peran, int idTingkat, int idPengguna) {
-        // super.sc = new Scanner(System.in);
-        // super.db = new DBPgsql();
-        this.nama = nama;
-        this.peran = peran;
-        this.idTingkat = idTingkat;
-        this.idPengguna = idPengguna;
-        this.mainView();
+    public viewKaryawan() {
+        super.sc = new Scanner(System.in);
+        super.db = new DBPgsql();
     }
 
     @Override
     public void showMenu() {
         Fungsi.clearScreen();
-        System.out.println("hi, " + this.nama);
-        System.out.println("Pilihan sebagai " + this.peran + "\n");
-        System.out.println("1. Karyawan ");
-        System.out.println("2. Lihat Transaksi ");
-        System.out.println("3. Lihat Daftar Menu ");
-        System.out.println("0. Logout ");
-        System.out.print("Masukkan Pilihan (0,1,2,3):");
+        System.out.println("hi, " + super.nama);
+        System.out.println("Pilihan sebagai " + super.peran);
+        System.out.println(Fungsi.repeatStr("-", 15));
+        System.out.println("1. Karyawan\n2. Transaksi\n3. Daftar Menu\n4. Profil \n5. Logout");
+        System.out.print(">> ");
     }
 
     @Override
     public int getInput() {
-        // String s = super.sc.next();
-        // int input;
-        // try {
-        // input = Integer.parseInt(s);
-        // } catch (NumberFormatException e) {
-        // input = 0;
-        // }
-        // return input;
-        return 0;
+        String s = super.sc.next();
+        int input;
+        try {
+            input = Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            input = 0;
+        }
+        return input;
     }
 
-    public void mainView() {
-        while (!isLogout) {
+    // main view, void
+    public void mainView(String nama, String peran, int idTingkat, int idPengguna) {
+        super.setNama(nama);
+        super.setPeran(peran);
+        super.idTingkat = idTingkat;
+        super.idPengguna = idPengguna;
+
+        while (!this.isLogout) {
             showMenu();
             switch (getInput()) {
             case 1:
@@ -60,8 +53,11 @@ public class viewKaryawan implements View {
             case 2:
                 System.out.println("transaksi");
                 break;
+            case 3:
+                super.mainViewDaftarMenu();
+                break;
             case 5:
-                isLogout = true;
+                this.isLogout = super.isLogout();
                 break;
             default:
                 Fungsi.backToMenu("salah input !");
