@@ -1,3 +1,6 @@
+drop table if exists daftar_menu, pengguna, pesanan, tingkat, transaksi;
+
+
 CREATE TABLE daftar_menu (
     id_daftar_menu  SERIAL NOT NULL,
     nama            VARCHAR(50) NOT NULL,
@@ -18,7 +21,7 @@ ALTER TABLE pengguna ADD CONSTRAINT pengguna_pk PRIMARY KEY ( id_pengguna );
 CREATE TABLE pesanan (
     id_pesanan                  SERIAL NOT NULL,
     transaksi_id_transaksi      INTEGER NOT NULL,
-	daftar_menu_id_daftar_menu  INTEGER NOT NULL
+    daftar_menu_id_daftar_menu  INTEGER NOT NULL
 );
 ALTER TABLE pesanan ADD CONSTRAINT pesanan_pk PRIMARY KEY ( id_pesanan );
 
@@ -52,6 +55,5 @@ ALTER TABLE pesanan
 ALTER TABLE transaksi
     ADD CONSTRAINT transaksi_pengguna_fk FOREIGN KEY ( pengguna_id_pengguna )
         REFERENCES pengguna ( id_pengguna );
-
 
 insert into tingkat(hak_akses) values ('admin'), ('karyawan')
