@@ -16,9 +16,9 @@ Aplikasi ini dikembangkan untuk mempermudah para pemilik cafe dalam mengelola se
 ERD dalam database kami
 
 ## Kontributor
-- [Astri Auliya Ardini]() (202410101111)
-- [Dewana Kretarta Lokeswara](https://github.com/dewanakl) (202410101137)
-- [Frans Vito Jonathan Simamora](https://github.com/fitoplankton) (20241010101051)
+- [Astri Auliya Ardini] (202410101111)
+- [Dewana Kretarta Lokeswara] (202410101137)
+- [Frans Vito Jonathan Simamora] (20241010101051)
 
 ## License
 SiCafe berlisensi [GPL 3.0](https://opensource.org/licenses/GPL-3.0)
