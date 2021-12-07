@@ -13,7 +13,6 @@ Aplikasi ini dikembangkan untuk mempermudah para pemilik cafe dalam mengelola se
 
 ## ERD
 <p align="center"><img src="https://raw.githubusercontent.com/dewanakl/SiCafe/main/image/Erdsicafe.png" width="600"></p>
-ERD dalam database kami
 
 ## License
 SiCafe berlisensi [GPL 3.0](https://opensource.org/licenses/GPL-3.0)
