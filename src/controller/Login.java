@@ -47,33 +47,4 @@ public class Login {
         }
         return isLogin;
     }
-
-    protected void setup() {
-        Fungsi.clearScreen();
-        System.out.println("Setup Aplikasi SiCafe\n");
-        System.out.println("Silahkan input nama, username, dan password\n");
-        System.out.print("Masukkan nama : ");
-        String nama = this.sc.nextLine();
-        System.out.print("Masukkan username: ");
-        String namaUser = this.sc.nextLine();
-        System.out.print("Masukkan password: ");
-        String pswd = this.sc.nextLine();
-        String query = "insert into pengguna(nama, username, password, tingkat_id_tingkat)\n"
-                + "values ('%s', '%s', '%s', 1)";
-        query = String.format(query, nama, namaUser, pswd);
-        if (this.db.CUD(query)) {
-            Fungsi.backToMenu("behasil setup !");
-        } else {
-            Fungsi.backToMenu("gagal setup !");
-        }
-    }
-
-    protected boolean checkAdmin() {
-        String query = "SELECT * FROM pengguna WHERE tingkat_id_tingkat = 1";
-        this.db.getData(query);
-        if (this.db.getListData().size() > 0) {
-            return false;
-        }
-        return true;
-    }
 }

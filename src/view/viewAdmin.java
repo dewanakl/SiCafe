@@ -46,23 +46,23 @@ public class viewAdmin extends Admin implements View {
         while (!this.isLogout) {
             showMenu();
             switch (getInput()) {
-            case 1:
-                super.mainViewKaryawan();
-                break;
-            case 2:
-                super.lihatTransaksi();
-                break;
-            case 3:
-                super.lihatDaftarMenu();
-                break;
-            case 4:
-                super.mainProfil();
-                break;
-            case 5:
-                this.isLogout = super.isLogout();
-                break;
-            default:
-                Fungsi.backToMenu("salah input !");
+                case 1:
+                    super.mainViewKaryawan();
+                    break;
+                case 2:
+                    super.lihatTransaksi();
+                    break;
+                case 3:
+                    super.lihatDaftarMenu();
+                    break;
+                case 4:
+                    super.showProfil();
+                    break;
+                case 5:
+                    this.isLogout = super.isLogout();
+                    break;
+                default:
+                    Fungsi.backToMenu("salah input !", 2);
             }
         }
     }

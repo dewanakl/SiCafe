@@ -12,6 +12,9 @@ public class Admin extends Person {
     protected String nama;
     protected String peran;
 
+    private Menu mn = new Menu();
+    private Transaksi tr = new Transaksi();
+
     @Override
     public void setNama(String nama) {
         this.nama = nama;
@@ -102,7 +105,7 @@ public class Admin extends Person {
                     Fungsi.backToMenu("username harus berbeda");
                 }
             } else {
-                Fungsi.backToMenu("batal mengedit");
+                Fungsi.backToMenu("batal mengedit", 2);
             }
         }
     }
@@ -126,7 +129,7 @@ public class Admin extends Person {
                     Fungsi.backToMenu("gagal menghapus");
                 }
             } else {
-                Fungsi.backToMenu("batal menghapus");
+                Fungsi.backToMenu("batal menghapus", 2);
             }
         }
     }
@@ -140,74 +143,49 @@ public class Admin extends Person {
             System.out.println("1. register\n2. edit\n3. hapus\n4. kembali");
             System.out.print(">> ");
             switch (getInput()) {
-            case 1:
-                this.registerKaryawan();
-                break;
-            case 2:
-                this.editKaryawan();
-                break;
-            case 3:
-                this.hapusKaryawan();
-                break;
-            case 4:
-                kembali = true;
-                break;
-            default:
-                Fungsi.backToMenu("salah input !");
+                case 1:
+                    this.registerKaryawan();
+                    break;
+                case 2:
+                    this.editKaryawan();
+                    break;
+                case 3:
+                    this.hapusKaryawan();
+                    break;
+                case 4:
+                    kembali = true;
+                    break;
+                default:
+                    Fungsi.backToMenu("salah input !", 2);
             }
         }
     }
 
     protected void lihatTransaksi() {
-        boolean kembali = false;
-        while (!kembali) {
+        while (true) {
             Fungsi.clearScreen();
-            this.db.getData("select * from transaksi");
-            Fungsi.displayTabel(this.db.getListKolom(), this.db.getListData());
+            this.tr.showTransaksi();
             System.out.println("1. kembali");
             System.out.print(">> ");
             if (getInput() == 1) {
-                kembali = true;
                 break;
             }
         }
     }
 
     protected void lihatDaftarMenu() {
-        boolean kembali = false;
-        while (!kembali) {
+        while (true) {
             Fungsi.clearScreen();
-            Barang barang = new Barang();
-            barang.lihatBarang();
+            this.mn.lihatMenu();
             System.out.println("1. kembali");
             System.out.print(">> ");
             if (this.getInput() == 1) {
-                kembali = true;
                 break;
             }
         }
     }
 
-    protected void mainProfil() {
-        Fungsi.clearScreen();
-        this.db.getData("SELECT nama, username, password FROM pengguna WHERE id_pengguna = 1");
-        Fungsi.displayTabel(this.db.getListKolom(), this.db.getListData());
-        System.out.println("1. ubah\n2. kembali");
-        System.out.print(">> ");
-        if (this.getInput() == 1) {
-            System.out.println("Edit profil");
-            this.sc.nextLine();
-            System.out.print("Masukkan nama : ");
-            String nama = this.sc.nextLine();
-            System.out.print("Masukkan password: ");
-            String pswd = this.sc.nextLine();
-            String query = "update pengguna set nama = '%s', password = '%s' where id_pengguna = 1";
-            query = String.format(query, nama, pswd);
-            if (this.db.CUD(query)) {
-                Fungsi.backToMenu("berhasil mengedit");
-            } else {
-                Fungsi.backToMenu("error !");
-            }
-        }
+    protected void showProfil() {
+        super.profil(1);
     }
 }

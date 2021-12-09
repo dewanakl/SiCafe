@@ -21,7 +21,7 @@ public class viewKaryawan extends Karyawan implements View {
         System.out.println("hi, " + super.nama);
         System.out.println("Pilihan sebagai " + super.peran);
         System.out.println(Fungsi.repeatStr("-", 15));
-        System.out.println("1. Karyawan\n2. Transaksi\n3. Daftar Menu\n4. Profil \n5. Logout");
+        System.out.println("1. Transaksi Baru\n2. Riwayat Transaksi\n3. Daftar Menu\n4. Profil \n5. Logout");
         System.out.print(">> ");
     }
 
@@ -47,20 +47,23 @@ public class viewKaryawan extends Karyawan implements View {
         while (!this.isLogout) {
             showMenu();
             switch (getInput()) {
-            case 1:
-                System.out.println("karyawan");
-                break;
-            case 2:
-                System.out.println("transaksi");
-                break;
-            case 3:
-                super.mainViewDaftarMenu();
-                break;
-            case 5:
-                this.isLogout = super.isLogout();
-                break;
-            default:
-                Fungsi.backToMenu("salah input !");
+                case 1:
+                    super.transaksiBaru();
+                    break;
+                case 2:
+                    //
+                    break;
+                case 3:
+                    super.mainViewDaftarMenu();
+                    break;
+                case 4:
+                    super.showProfil();
+                    break;
+                case 5:
+                    this.isLogout = super.isLogout();
+                    break;
+                default:
+                    Fungsi.backToMenu("salah input !", 2);
             }
         }
     }

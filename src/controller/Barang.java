@@ -1,7 +1,5 @@
 package controller;
 
-//import java.util.ArrayList;
-
 import config.Fungsi;
 import model.DBPgsql;
 

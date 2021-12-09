@@ -19,14 +19,19 @@ public class DBPgsql {
     private ArrayList<String> listData;
 
     public DBPgsql() {
-        this.listField = new ArrayList<String>();
-        this.listData = new ArrayList<String>();
         String dsn = "jdbc:postgresql://" + this.host + ":5432/" + this.db_name;
         try {
             this.dbh = DriverManager.getConnection(dsn, this.user, this.pass);
         } catch (SQLException ex) {
             Fungsi.Exspetasi(ex.toString());
         }
+        this.newArray();
+    }
+
+    // new array, void
+    private void newArray() {
+        this.listField = new ArrayList<String>();
+        this.listData = new ArrayList<String>();
     }
 
     // get data array, boolean

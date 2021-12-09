@@ -8,7 +8,7 @@ public class Fungsi {
 
     // print and exit, void
     public static void Exspetasi(String prm) {
-        System.out.println("Upss... " + prm);
+        System.err.println("Upss... " + prm);
         System.exit(0);
     }
 
@@ -98,6 +98,17 @@ public class Fungsi {
                 Thread.currentThread().interrupt();
             }
             n--;
+        }
+    }
+
+    // overloading beauty back to menu, void
+    public static void backToMenu(String msg, int time) {
+        clearScreen();
+        System.out.println(msg);
+        try {
+            Thread.sleep(time * 1000);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
         }
     }
 }
