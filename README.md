@@ -1,18 +1,18 @@
-## Getting Started
+## SiCafe
+<p align="center"><img src="https://raw.githubusercontent.com/dewanakl/SiCafe/main/image/sicafe.png" width="200"></p>
+Repository Project PBO pembuatan sistem informasi pengelola transaksi cafe berbasis console. Project ini dibuat menggunakan bahasa java dengan database postgresql.
+Aplikasi ini dikembangkan untuk mempermudah para pemilik cafe dalam mengelola setiap transaksi penjualan. Fitur-fitur yang telah ada antara lain:
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+- Manajemen transaksi
+- pemasukan
 
-## Folder Structure
+## Instalasi
+- input .sql
+- rename address in config.java
+- run App.java
 
-The workspace contains two folders by default, where:
+## ERD
+<p align="center"><img src="https://raw.githubusercontent.com/dewanakl/SiCafe/main/image/Erdsicafe.png" width="600"></p>
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## License
+SiCafe berlisensi [GPL 3.0](https://opensource.org/licenses/GPL-3.0)
