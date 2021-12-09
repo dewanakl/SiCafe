@@ -7,9 +7,11 @@ Aplikasi ini dikembangkan untuk mempermudah para pemilik cafe dalam mengelola se
 - pemasukan
 
 ## Instalasi
-- input .sql
-- rename address in config.java
+Instalasi yang mudah dan sederhana, cukup dengan :
+- bikin database di postgresql
+- rename db config di config.java
 - run App.java
+- enjoy :)
 
 ## ERD
 <p align="center"><img src="https://raw.githubusercontent.com/dewanakl/SiCafe/main/image/Erdsicafe.png" width="600"></p>
