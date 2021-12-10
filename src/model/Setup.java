@@ -5,8 +5,8 @@ import java.util.Scanner;
 import config.Fungsi;
 
 public class Setup {
-    Scanner sc;
-    DBPgsql db;
+    private Scanner sc;
+    private DBPgsql db;
 
     public Setup() {
         this.sc = new Scanner(System.in);

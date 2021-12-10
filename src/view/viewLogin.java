@@ -8,12 +8,12 @@ import java.util.Scanner;
 
 public class viewLogin extends Login implements View {
 
-    Setup st;
+    private Setup stp;
 
     public viewLogin() {
         super.db = new DBPgsql();
         super.sc = new Scanner(System.in);
-        this.st = new Setup();
+        this.stp = new Setup();
     }
 
     @Override
@@ -37,7 +37,7 @@ public class viewLogin extends Login implements View {
     }
 
     public void vMain() {
-        this.st.check();
+        this.stp.check();
         while (true) {
             Fungsi.clearScreen();
             this.showMenu();
