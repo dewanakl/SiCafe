@@ -3,16 +3,16 @@
 Repository Project PBO pembuatan sistem informasi pengelola transaksi cafe berbasis console. Project ini dibuat menggunakan bahasa java dengan database postgresql.
 Aplikasi ini dikembangkan untuk mempermudah para pemilik cafe dalam mengelola setiap transaksi penjualan. Fitur yang telah ada antara lain:
 
-- Manajemen transaksi
-- Mengelola menu
-- Mengorganisir karyawan
+- Manajemen Transaksi
+- Mengelola Menu
+- Mengorganisir Karyawan
 
 ## Instalasi
 Instalasi yang mudah dan sederhana, cukup dengan :
-- bikin database di postgresql
-- rename db config di config.java
-- run App.java
-- enjoy :)
+- 1. bikin database di postgresql nama "sicafe"
+- 2. rename db config -> Config.java
+- 3. run App.java
+- Done
 
 ## ERD
 <p align="center"><img src="https://raw.githubusercontent.com/dewanakl/SiCafe/main/image/Erdsicafe.png" width="600"></p>
