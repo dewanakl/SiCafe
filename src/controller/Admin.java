@@ -164,7 +164,10 @@ public class Admin extends Person {
     protected void lihatTransaksi() {
         while (true) {
             Fungsi.clearScreen();
-            this.tr.showTransaksi();
+            this.tr.showTransaksi(true);
+            this.db.getData(
+                    "SELECT sum(harga) FROM pesanan join daftar_menu on(pesanan.daftar_menu_id_daftar_menu = daftar_menu.id_daftar_menu)");
+            System.out.println("\nJumlah semua pendapatan Rp. " + this.db.getListData().get(0));
             System.out.println("1. kembali");
             System.out.print(">> ");
             if (getInput() == 1) {

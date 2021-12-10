@@ -8,14 +8,12 @@ import java.util.Scanner;
 
 public class viewLogin extends Login implements View {
 
+    Setup st;
+
     public viewLogin() {
         super.db = new DBPgsql();
         super.sc = new Scanner(System.in);
-        // if (super.checkAdmin()) {
-        // super.setup();
-        // }
-        Setup st = new Setup();
-        st.check();
+        this.st = new Setup();
     }
 
     @Override
@@ -38,8 +36,8 @@ public class viewLogin extends Login implements View {
         return input;
     }
 
-    // vMain, void
     public void vMain() {
+        this.st.check();
         while (true) {
             Fungsi.clearScreen();
             this.showMenu();
@@ -61,7 +59,7 @@ public class viewLogin extends Login implements View {
                     }
                     break;
                 case 2:
-                    Fungsi.Exspetasi("exit");
+                    Fungsi.Ekspektasi("exit");
                 default:
                     Fungsi.backToMenu("salah input !", 2);
             }

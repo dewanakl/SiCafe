@@ -16,6 +16,7 @@ public abstract class Person {
     protected void profil(int idPengguna) {
         DBPgsql db = new DBPgsql();
         this.sc = new Scanner(System.in);
+
         Fungsi.clearScreen();
         db.getData("SELECT nama, username, password FROM pengguna WHERE id_pengguna = " + idPengguna);
         Fungsi.displayTabel(db.getListKolom(), db.getListData());

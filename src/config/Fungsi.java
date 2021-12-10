@@ -7,7 +7,7 @@ import java.text.DecimalFormatSymbols;
 public class Fungsi {
 
     // print and exit, void
-    public static void Exspetasi(String prm) {
+    public static void Ekspektasi(String prm) {
         System.err.println("Upss... " + prm);
         System.exit(0);
     }
@@ -68,7 +68,12 @@ public class Fungsi {
                 }
 
                 if (a % num == 0) {
-                    Double price = Double.valueOf(lstBrg.get(a));
+                    Double price;
+                    try {
+                        price = Double.valueOf(lstBrg.get(a));
+                    } catch (NumberFormatException e) {
+                        price = 1d;
+                    }
                     if (price >= 500.d) {
                         System.out.printf("%-30s", kursIndonesia.format(price));
                     } else {

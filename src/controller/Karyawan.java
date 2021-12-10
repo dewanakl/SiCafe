@@ -65,4 +65,18 @@ public class Karyawan extends Person {
     protected void showProfil() {
         super.profil(this.idPengguna);
     }
+
+    protected void riwayatTransaksi() {
+        Transaksi tr = new Transaksi();
+        while (true) {
+            Fungsi.clearScreen();
+            System.out.println("Riwayat Transaksi");
+            tr.showTransaksiByPengguna(this.idPengguna);
+            System.out.println("1. kembali");
+            System.out.print(">> ");
+            if (getInput() == 1) {
+                break;
+            }
+        }
+    }
 }

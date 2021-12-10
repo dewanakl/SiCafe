@@ -75,7 +75,7 @@ public class Setup {
     private void setup() {
         Fungsi.clearScreen();
         System.out.println("Setup Aplikasi SiCafe\n");
-        System.out.println("Silahkan input nama, username, dan password\n");
+        System.out.println("Silahkan input nama, username, dan password sebagai admin\n");
         System.out.print("Masukkan nama : ");
         String nama = this.sc.nextLine();
         System.out.print("Masukkan username: ");
@@ -106,7 +106,7 @@ public class Setup {
             if (this.dbSetup()) {
                 this.setup();
             } else {
-                Fungsi.backToMenu("database error", 4);
+                Fungsi.backToMenu("database error, please insert manualy", 4);
             }
         }
     }

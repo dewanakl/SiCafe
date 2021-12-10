@@ -10,6 +10,9 @@ public class Config {
     // database password
     public static String DB_PASS = "myserver1";
 
+    // database port (default 5432)
+    public static String DB_PORT = "5432";
+
     // database name
     public static String DB_NAME = "sicafe";
 }

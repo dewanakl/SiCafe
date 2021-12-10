@@ -58,7 +58,7 @@ public class Menu {
         if (result) {
             Fungsi.backToMenu("behasil menambahkan !");
         } else {
-            Fungsi.backToMenu("error tak terduga");
+            Fungsi.backToMenu("input kategori dengan benar / salah input");
         }
     }
 

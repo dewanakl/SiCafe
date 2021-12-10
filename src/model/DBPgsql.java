@@ -13,17 +13,18 @@ public class DBPgsql {
     private String host = Config.DB_HOST;
     private String user = Config.DB_USER;
     private String pass = Config.DB_PASS;
+    private String port = Config.DB_PORT;
     private String db_name = Config.DB_NAME;
     private Connection dbh;
     private ArrayList<String> listField;
     private ArrayList<String> listData;
 
     public DBPgsql() {
-        String dsn = "jdbc:postgresql://" + this.host + ":5432/" + this.db_name;
+        String dsn = "jdbc:postgresql://" + this.host + ":" + this.port + "/" + this.db_name;
         try {
             this.dbh = DriverManager.getConnection(dsn, this.user, this.pass);
         } catch (SQLException ex) {
-            Fungsi.Exspetasi(ex.toString());
+            Fungsi.Ekspektasi(ex.toString());
         }
         this.newArray();
     }

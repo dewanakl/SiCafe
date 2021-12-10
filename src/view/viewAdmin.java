@@ -39,7 +39,6 @@ public class viewAdmin extends Admin implements View {
         return input;
     }
 
-    // main view, void
     public void mainView(String nama, String peran) {
         super.setNama(nama);
         super.setPeran(peran);

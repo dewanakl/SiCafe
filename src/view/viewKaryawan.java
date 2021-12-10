@@ -13,6 +13,8 @@ public class viewKaryawan extends Karyawan implements View {
     public viewKaryawan() {
         super.sc = new Scanner(System.in);
         super.db = new DBPgsql();
+        super.nama = null;
+        super.peran = null;
     }
 
     @Override
@@ -37,7 +39,6 @@ public class viewKaryawan extends Karyawan implements View {
         return input;
     }
 
-    // main view, void
     public void mainView(String nama, String peran, int idTingkat, int idPengguna) {
         super.setNama(nama);
         super.setPeran(peran);
@@ -51,7 +52,7 @@ public class viewKaryawan extends Karyawan implements View {
                     super.transaksiBaru();
                     break;
                 case 2:
-                    //
+                    super.riwayatTransaksi();
                     break;
                 case 3:
                     super.mainViewDaftarMenu();
