@@ -9,9 +9,9 @@ Aplikasi ini dikembangkan untuk mempermudah para pemilik cafe dalam mengelola se
 
 ## Instalasi
 Instalasi yang mudah dan sederhana, cukup dengan :
-- 1. bikin database di postgresql nama "sicafe"
-- 2. rename db config -> Config.java
-- 3. run App.java
+- bikin database di postgresql nama "sicafe"
+- rename db config -> Config.java
+- run App.java
 - Done
 
 ## ERD
