@@ -21,7 +21,7 @@ public class Menu {
         this.db = new DBPgsql();
     }
 
-    protected int getInput() {
+    private int getInput() {
         String s = this.sc.next();
         int input;
         try {

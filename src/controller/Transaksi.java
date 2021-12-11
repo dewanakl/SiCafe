@@ -19,7 +19,7 @@ public class Transaksi {
         this.mn = new Menu();
     }
 
-    protected int getInput() {
+    private int getInput() {
         String s = this.sc.next();
         int input;
         try {
@@ -165,19 +165,19 @@ public class Transaksi {
                         String update = "update transaksi set dibayarkan = %s where id_transaksi = %s";
                         update = String.format(update, dibayarkan, id_transaksi);
                         Fungsi.clearScreen();
-                        System.out.println("Atas Nama: " + this.namaPelanggan);
+                        System.out.println("Atas nama: " + this.namaPelanggan);
                         System.out.println("Keranjang Belanja:");
                         this.showTransaksi(id_transaksi);
                         System.out.println("Subtotal: Rp." + total);
                         if (dibayarkan != Integer.parseInt(total)) {
-                            System.out.println("Kebalian : Rp." + (dibayarkan - Integer.parseInt(total)));
+                            System.out.println("Kembalian : Rp." + (dibayarkan - Integer.parseInt(total)));
                         }
                         System.out.println("inputkan apa saja untuk melanjutkan");
                         this.getInput();
                         if (this.db.CUD(update)) {
                             Fungsi.backToMenu("berhasil menambahkan");
                         } else {
-                            Fungsi.backToMenu("server error 2");
+                            Fungsi.backToMenu("db error 2");
                         }
                     } else {
                         Fungsi.backToMenu("Harga dibayarkan kurang Rp. " + (Integer.parseInt(total) - dibayarkan), 2);
@@ -185,7 +185,7 @@ public class Transaksi {
                     }
                 }
             } else {
-                Fungsi.backToMenu("server error");
+                Fungsi.backToMenu("db error");
             }
         } else {
             Fungsi.backToMenu("silahkan isikan daftar menu terlebih dahulu", 4);
