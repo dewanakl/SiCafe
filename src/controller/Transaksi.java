@@ -173,9 +173,9 @@ public class Transaksi {
                         System.out.println("Atas nama: " + this.namaPelanggan);
                         System.out.println("Keranjang Belanja:");
                         this.showTransaksi(id_transaksi);
-                        System.out.println("Subtotal: Rp." + total);
+                        System.out.println("Subtotal: Rp. " + total);
                         if (dibayarkan != Integer.parseInt(total)) {
-                            System.out.println("Kembalian : Rp." + (dibayarkan - Integer.parseInt(total)));
+                            System.out.println("Kembalian : Rp. " + (dibayarkan - Integer.parseInt(total)));
                         }
                         System.out.println("Dengan uang Rp. " + dibayarkan);
                         System.out.println();
