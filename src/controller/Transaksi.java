@@ -178,7 +178,8 @@ public class Transaksi {
                             System.out.println("Kembalian : Rp." + (dibayarkan - Integer.parseInt(total)));
                         }
                         System.out.println("Dengan uang Rp. " + dibayarkan);
-                        System.out.println("inputkan apa saja untuk melanjutkan");
+                        System.out.println();
+                        System.out.print("inputkan apa saja untuk melanjutkan");
                         this.getInput();
                         if (this.db.CUD(update, xxx)) {
                             Fungsi.backToMenu("berhasil menambahkan");
