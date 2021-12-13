@@ -8,14 +8,11 @@ import java.util.Scanner;
 public class Karyawan extends Person {
 
     protected Scanner sc;
-    protected DBPgsql db;
 
     protected String nama;
     protected String peran;
     protected int idTingkat;
     protected int idPengguna;
-
-    private Menu mn = new Menu();
 
     @Override
     public void setNama(String nama) {
@@ -59,7 +56,8 @@ public class Karyawan extends Person {
     }
 
     protected void mainViewDaftarMenu() {
-        this.mn.daftarMenu();
+        Menu mn = new Menu();
+        mn.daftarMenu();
     }
 
     protected void showProfil() {

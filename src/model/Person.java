@@ -18,7 +18,8 @@ public abstract class Person {
         this.sc = new Scanner(System.in);
 
         Fungsi.clearScreen();
-        db.getData("SELECT nama, username, password FROM pengguna WHERE id_pengguna = " + idPengguna);
+        Object[] x = new Object[] { idPengguna };
+        db.getData("SELECT nama, username, password FROM pengguna WHERE id_pengguna = ?", x);
         Fungsi.displayTabel(db.getListKolom(), db.getListData());
         System.out.println("1. ubah nama\n2. ubah password\n3. kembali");
         System.out.print(">> ");
@@ -35,9 +36,9 @@ public abstract class Person {
                 this.sc.nextLine();
                 System.out.print("Masukkan nama : ");
                 String nama = this.sc.nextLine();
-                String updatename = "update pengguna set nama = '%s' where id_pengguna = %s";
-                updatename = String.format(updatename, nama, idPengguna);
-                if (db.CUD(updatename)) {
+                String updatename = "update pengguna set nama = ? where id_pengguna = ?";
+                Object[] xx = new Object[] { nama, idPengguna };
+                if (db.CUD(updatename, xx)) {
                     Fungsi.backToMenu("berhasil mengedit");
                 } else {
                     Fungsi.backToMenu("error !");
@@ -51,9 +52,9 @@ public abstract class Person {
                 System.out.print("Ulangi password: ");
                 String pswd2 = this.sc.nextLine();
                 if (pswd1.equals(pswd2)) {
-                    String updatepass = "update pengguna set password = '%s' where id_pengguna = %s";
-                    updatepass = String.format(updatepass, pswd2, idPengguna);
-                    if (db.CUD(updatepass)) {
+                    String updatepass = "update pengguna set password = ? where id_pengguna = ?";
+                    Object[] xxx = new Object[] { pswd2, idPengguna };
+                    if (db.CUD(updatepass, xxx)) {
                         Fungsi.backToMenu("berhasil mengedit");
                     } else {
                         Fungsi.backToMenu("error !");

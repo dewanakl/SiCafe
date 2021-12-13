@@ -31,7 +31,7 @@ public class Transaksi {
     }
 
     public void showTransaksi() {
-        this.db.getData("select * from transaksi");
+        this.db.getData("select * from transaksi", null);
         Fungsi.displayTabel(this.db.getListKolom(), this.db.getListData());
     }
 
@@ -44,7 +44,7 @@ public class Transaksi {
                     "from transaksi join pesanan on(transaksi.id_transaksi = pesanan.transaksi_id_transaksi)\n" +
                     "join daftar_menu on(pesanan.daftar_menu_id_daftar_menu = daftar_menu.id_daftar_menu)\n" +
                     "join pengguna on(pengguna.id_pengguna = transaksi.pengguna_id_pengguna)\n" +
-                    "GROUP BY transaksi.id_transaksi, pengguna.nama order by pengguna.nama");
+                    "GROUP BY transaksi.id_transaksi, pengguna.nama order by pengguna.nama", null);
             Fungsi.displayTabel(this.db.getListKolom(), this.db.getListData());
         } else {
             Fungsi.backToMenu("require param boolean true");
@@ -52,10 +52,12 @@ public class Transaksi {
     }
 
     private boolean showTransaksi(int id_transaksi) {
+        Object[] x = new Object[] { id_transaksi };
         this.db.getData(
                 "SELECT daftar_menu.nama, daftar_menu.harga, daftar_menu.kategori FROM pesanan join daftar_menu\n" +
                         "on(pesanan.daftar_menu_id_daftar_menu = daftar_menu.id_daftar_menu)\n" +
-                        "WHERE pesanan.transaksi_id_transaksi = " + id_transaksi);
+                        "WHERE pesanan.transaksi_id_transaksi = ?",
+                x);
         if (this.db.getListData().isEmpty()) {
             System.out.println();
             System.out.println("data belum ada");
@@ -67,6 +69,7 @@ public class Transaksi {
     }
 
     public void showTransaksiByPengguna(int id_pengguna) {
+        Object[] x = new Object[] { id_pengguna };
         this.db.getData(
                 "select transaksi.nama_pelanggan, TO_CHAR(transaksi.tanggal_pembayaran, 'yyyy/mm/dd HH12:MI') as tanggal_transaksi,\n"
                         +
@@ -76,8 +79,9 @@ public class Transaksi {
                         "from transaksi join pesanan on(transaksi.id_transaksi = pesanan.transaksi_id_transaksi)\n" +
                         "join daftar_menu on(pesanan.daftar_menu_id_daftar_menu = daftar_menu.id_daftar_menu)\n" +
                         "join pengguna on(pengguna.id_pengguna = transaksi.pengguna_id_pengguna)\n" +
-                        "where pengguna.id_pengguna = " + id_pengguna
-                        + " GROUP BY transaksi.id_transaksi, pengguna.nama order by transaksi.id_transaksi desc");
+                        "where pengguna.id_pengguna = ?"
+                        + " GROUP BY transaksi.id_transaksi, pengguna.nama order by transaksi.id_transaksi desc",
+                x);
         if (this.db.getListData().isEmpty()) {
             System.out.println();
             System.out.println("data belum ada");
@@ -88,7 +92,7 @@ public class Transaksi {
 
     private boolean cekDaftarmenu() {
         String query = "SELECT * FROM daftar_menu";
-        this.db.getData(query);
+        this.db.getData(query, null);
         if (this.db.getListData().size() > 0) {
             return true;
         }
@@ -100,14 +104,14 @@ public class Transaksi {
         mn.lihatMenu();
         System.out.print("Masukkan id menu : ");
         int id = this.getInput();
-        this.db.getData("SELECT * FROM daftar_menu WHERE id_daftar_menu = " + id);
+        Object[] x = new Object[] { id };
+        this.db.getData("SELECT * FROM daftar_menu WHERE id_daftar_menu = ?", x);
         if (this.db.getListData().isEmpty()) {
             Fungsi.backToMenu("data tidak ada / salah input");
         } else {
-            String query = "insert into pesanan(transaksi_id_transaksi, daftar_menu_id_daftar_menu)\n"
-                    + "values(%s, %s)";
-            query = String.format(query, id_transaksi, id);
-            this.db.CUD(query);
+            String query = "insert into pesanan(transaksi_id_transaksi, daftar_menu_id_daftar_menu) values(?, ?)";
+            Object[] xx = new Object[] { id_transaksi, id };
+            this.db.CUD(query, xx);
         }
     }
 
@@ -119,9 +123,9 @@ public class Transaksi {
             System.out.print("Masukkan nama pembeli : ");
             this.namaPelanggan = this.sc.nextLine();
             String query = "insert into transaksi(nama_pelanggan, dibayarkan, pengguna_id_pengguna)\n"
-                    + "values('%s', 0, %s) RETURNING id_transaksi";
-            query = String.format(query, this.namaPelanggan, idKaryawan);
-            if (this.db.getData(query)) {
+                    + "values(?, 0, ?) RETURNING id_transaksi";
+            Object[] x = new Object[] { this.namaPelanggan, idKaryawan };
+            if (this.db.getData(query, x)) {
                 String id = this.db.getListData().get(0);
                 int id_transaksi = Integer.parseInt(id);
                 Boolean kembali = false;
@@ -150,8 +154,9 @@ public class Transaksi {
                 }
                 String total = "SELECT sum(daftar_menu.harga) FROM pesanan join daftar_menu\n" +
                         "on(pesanan.daftar_menu_id_daftar_menu = daftar_menu.id_daftar_menu)\n" +
-                        "WHERE pesanan.transaksi_id_transaksi = " + id_transaksi;
-                this.db.getData(total);
+                        "WHERE pesanan.transaksi_id_transaksi = ?";
+                Object[] xx = new Object[] { id_transaksi };
+                this.db.getData(total, xx);
                 total = this.db.getListData().get(0);
                 Boolean isLoop = true;
                 while (isLoop) {
@@ -162,8 +167,8 @@ public class Transaksi {
                     int dibayarkan = Integer.parseInt(harga.replace(".", ""));
                     if (dibayarkan >= Integer.parseInt(total)) {
                         isLoop = false;
-                        String update = "update transaksi set dibayarkan = %s where id_transaksi = %s";
-                        update = String.format(update, dibayarkan, id_transaksi);
+                        String update = "update transaksi set dibayarkan = ? where id_transaksi = ?";
+                        Object[] xxx = new Object[] { dibayarkan, id_transaksi };
                         Fungsi.clearScreen();
                         System.out.println("Atas nama: " + this.namaPelanggan);
                         System.out.println("Keranjang Belanja:");
@@ -174,7 +179,7 @@ public class Transaksi {
                         }
                         System.out.println("inputkan apa saja untuk melanjutkan");
                         this.getInput();
-                        if (this.db.CUD(update)) {
+                        if (this.db.CUD(update, xxx)) {
                             Fungsi.backToMenu("berhasil menambahkan");
                         } else {
                             Fungsi.backToMenu("db error 2");

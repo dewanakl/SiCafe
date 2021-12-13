@@ -33,9 +33,9 @@ public class Login {
         this.peran = null;
         String query = "select pengguna.id_pengguna, pengguna.nama, tingkat.id_tingkat, tingkat.hak_akses\n"
                 + "from pengguna inner join tingkat on(pengguna.tingkat_id_tingkat = tingkat.id_tingkat)\n"
-                + "where pengguna.username = '%s' and pengguna.password = '%s'";
-        query = String.format(query, username, password);
-        this.db.getData(query);
+                + "where pengguna.username = ? and pengguna.password = ?";
+        Object[] x = new Object[] { username, password };
+        this.db.getData(query, x);
         if (this.db.getListData().isEmpty()) {
             isLogin = false;
         } else {

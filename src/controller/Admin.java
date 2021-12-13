@@ -51,7 +51,8 @@ public class Admin extends Person {
 
     protected void showDataKaryawan() {
         this.db.getData(
-                "SELECT id_pengguna, nama, username, password FROM pengguna WHERE tingkat_id_tingkat = 2 order by id_pengguna asc");
+                "SELECT id_pengguna, nama, username, password FROM pengguna WHERE tingkat_id_tingkat = 2 order by id_pengguna asc",
+                null);
         Fungsi.displayTabel(this.db.getListKolom(), this.db.getListData());
     }
 
@@ -65,10 +66,9 @@ public class Admin extends Person {
         String namaUser = this.sc.nextLine();
         System.out.print("Masukkan password: ");
         String pswd = this.sc.nextLine();
-        String query = "insert into pengguna(nama, username, password, tingkat_id_tingkat)\n"
-                + "values ('%s', '%s', '%s', 2)";
-        query = String.format(query, nama, namaUser, pswd);
-        if (this.db.CUD(query)) {
+        String query = "insert into pengguna(nama, username, password, tingkat_id_tingkat) values (?, ?, ?, 2)";
+        Object[] x = new Object[] { nama, namaUser, pswd };
+        if (this.db.CUD(query, x)) {
             Fungsi.backToMenu("behasil register !");
         } else {
             Fungsi.backToMenu("username harus berbeda");
@@ -79,7 +79,8 @@ public class Admin extends Person {
         System.out.print("Masukan id_pengguna : ");
         int idEdit = this.getInput();
         Fungsi.clearScreen();
-        this.db.getData("SELECT id_pengguna, nama, username, password FROM pengguna WHERE id_pengguna = " + idEdit);
+        Object[] x = new Object[] { idEdit };
+        this.db.getData("SELECT id_pengguna, nama, username, password FROM pengguna WHERE id_pengguna = ?", x);
         if (this.db.getListData().isEmpty()) {
             Fungsi.backToMenu("data tidak ada / salah input");
         } else {
@@ -96,10 +97,9 @@ public class Admin extends Person {
                 String namaUser = this.sc.nextLine();
                 System.out.print("Masukkan password: ");
                 String pswd = this.sc.nextLine();
-                String query = "update pengguna set nama = '%s', username = '%s', password = '%s' where id_pengguna = "
-                        + idEdit;
-                query = String.format(query, nama, namaUser, pswd);
-                if (this.db.CUD(query)) {
+                String query = "update pengguna set nama = ?, username = ?, password = ? where id_pengguna = ?";
+                Object[] xx = new Object[] { nama, namaUser, pswd, idEdit };
+                if (this.db.CUD(query, xx)) {
                     Fungsi.backToMenu("berhasil mengedit");
                 } else {
                     Fungsi.backToMenu("username harus berbeda");
@@ -114,7 +114,8 @@ public class Admin extends Person {
         System.out.print("Masukan id_pengguna : ");
         int idHapus = this.getInput();
         Fungsi.clearScreen();
-        this.db.getData("SELECT id_pengguna, nama, username, password FROM pengguna WHERE id_pengguna = " + idHapus);
+        Object[] x = new Object[] { idHapus };
+        this.db.getData("SELECT id_pengguna, nama, username, password FROM pengguna WHERE id_pengguna = ?", x);
         if (this.db.getListData().isEmpty()) {
             Fungsi.backToMenu("data tidak ada / salah input");
         } else {
@@ -123,7 +124,7 @@ public class Admin extends Person {
             System.out.print(">> ");
             int sure = this.getInput();
             if (sure == 1) {
-                if (this.db.CUD("delete from pengguna where id_pengguna = " + idHapus)) {
+                if (this.db.CUD("delete from pengguna where id_pengguna = ?", x)) {
                     Fungsi.backToMenu("berhasil menghapus");
                 } else {
                     Fungsi.backToMenu("gagal menghapus");
@@ -166,7 +167,8 @@ public class Admin extends Person {
             Fungsi.clearScreen();
             this.tr.showTransaksi(true);
             this.db.getData(
-                    "SELECT sum(harga) FROM pesanan join daftar_menu on(pesanan.daftar_menu_id_daftar_menu = daftar_menu.id_daftar_menu)");
+                    "SELECT sum(harga) FROM pesanan join daftar_menu on(pesanan.daftar_menu_id_daftar_menu = daftar_menu.id_daftar_menu)",
+                    null);
             System.out.println("\nJumlah semua pendapatan Rp. " + this.db.getListData().get(0));
             System.out.println("1. kembali");
             System.out.print(">> ");

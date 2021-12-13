@@ -36,12 +36,25 @@ public class DBPgsql {
     }
 
     // get data array, boolean
-    public boolean getData(String query) {
+    public boolean getData(String query, Object[] x) {
         this.listData.clear();
         this.listField.clear();
         try {
-            PreparedStatement pst = this.dbh.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
+            PreparedStatement pst = this.dbh.prepareStatement(
+                    query,
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
+            if (x != null) {
+                int num = 1;
+                for (Object o : x) {
+                    if (o instanceof Integer) {
+                        pst.setInt(num, Integer.valueOf(o.toString()));
+                    } else if (o instanceof String) {
+                        pst.setString(num, String.valueOf(o));
+                    }
+                    num++;
+                }
+            }
             ResultSet rs = pst.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
             int kol = rsmd.getColumnCount();
@@ -63,12 +76,25 @@ public class DBPgsql {
     }
 
     // create or update or delete, boolean
-    public boolean CUD(String query) {
+    public boolean CUD(String query, Object[] x) {
         this.listData.clear();
         this.listField.clear();
         try {
-            PreparedStatement pst = this.dbh.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
+            PreparedStatement pst = this.dbh.prepareStatement(
+                    query,
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
+            if (x != null) {
+                int num = 1;
+                for (Object o : x) {
+                    if (o instanceof Integer) {
+                        pst.setInt(num, Integer.valueOf(o.toString()));
+                    } else if (o instanceof String) {
+                        pst.setString(num, String.valueOf(o));
+                    }
+                    num++;
+                }
+            }
             pst.executeUpdate();
             return true;
         } catch (SQLException ex) {

@@ -7,9 +7,9 @@ public class Minuman extends Barang {
     }
 
     public boolean inputBarang(String nama, int price) {
-        String query = "insert into daftar_menu(nama, harga, kategori) values ('%s', '%s', 'minuman')";
-        query = String.format(query, nama, price);
-        if (super.db.CUD(query)) {
+        String query = "insert into daftar_menu(nama, harga, kategori) values (?, ?, 'minuman')";
+        Object[] x = new Object[] { nama, price };
+        if (super.db.CUD(query, x)) {
             return true;
         } else {
             return false;
@@ -17,10 +17,9 @@ public class Minuman extends Barang {
     }
 
     public boolean editBarang(String nama, int price, int idMakanan) {
-        String query = "update daftar_menu set nama = '%s', harga = '%s', kategori = 'minuman' where id_daftar_menu = "
-                + idMakanan;
-        query = String.format(query, nama, price);
-        if (super.db.CUD(query)) {
+        String query = "update daftar_menu set nama = ?, harga = ?, kategori = 'minuman' where id_daftar_menu = ?";
+        Object[] x = new Object[] { nama, price, idMakanan };
+        if (super.db.CUD(query, x)) {
             return true;
         } else {
             return false;

@@ -12,7 +12,6 @@ public class viewKaryawan extends Karyawan implements View {
 
     public viewKaryawan() {
         super.sc = new Scanner(System.in);
-        super.db = new DBPgsql();
         super.nama = null;
         super.peran = null;
     }

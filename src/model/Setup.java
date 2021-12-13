@@ -14,14 +14,14 @@ public class Setup {
     }
 
     private boolean dbSetup() {
-        boolean exists = this.db.CUD("drop table if exists daftar_menu, pengguna, pesanan, tingkat, transaksi;");
+        boolean exists = this.db.CUD("drop table if exists daftar_menu, pengguna, pesanan, tingkat, transaksi;", null);
 
         boolean tmenu = this.db.CUD("CREATE TABLE daftar_menu (" +
                 "id_daftar_menu  SERIAL NOT NULL," +
                 "nama            VARCHAR(50) NOT NULL," +
                 "harga           INTEGER NOT NULL," +
                 "kategori        VARCHAR(10) NOT NULL);" +
-                "ALTER TABLE daftar_menu ADD CONSTRAINT daftar_menu_pk PRIMARY KEY ( id_daftar_menu );");
+                "ALTER TABLE daftar_menu ADD CONSTRAINT daftar_menu_pk PRIMARY KEY ( id_daftar_menu );", null);
 
         boolean tpegguna = this.db.CUD("CREATE TABLE pengguna (" +
                 "id_pengguna         SERIAL NOT NULL," +
@@ -29,18 +29,18 @@ public class Setup {
                 "username            VARCHAR(50) NOT NULL unique," +
                 "password            VARCHAR(50) NOT NULL," +
                 "tingkat_id_tingkat  INTEGER NOT NULL);" +
-                "ALTER TABLE pengguna ADD CONSTRAINT pengguna_pk PRIMARY KEY ( id_pengguna );");
+                "ALTER TABLE pengguna ADD CONSTRAINT pengguna_pk PRIMARY KEY ( id_pengguna );", null);
 
         boolean tpesanan = this.db.CUD("CREATE TABLE pesanan (" +
                 "id_pesanan                  SERIAL NOT NULL," +
                 "transaksi_id_transaksi      INTEGER NOT NULL," +
                 "daftar_menu_id_daftar_menu  INTEGER NOT NULL);" +
-                "ALTER TABLE pesanan ADD CONSTRAINT pesanan_pk PRIMARY KEY ( id_pesanan );");
+                "ALTER TABLE pesanan ADD CONSTRAINT pesanan_pk PRIMARY KEY ( id_pesanan );", null);
 
         boolean ttingkat = this.db.CUD("CREATE TABLE tingkat (" +
                 "id_tingkat  SERIAL NOT NULL," +
                 "hak_akses   VARCHAR(20) NOT NULL);" +
-                "ALTER TABLE tingkat ADD CONSTRAINT tingkat_pk PRIMARY KEY ( id_tingkat );");
+                "ALTER TABLE tingkat ADD CONSTRAINT tingkat_pk PRIMARY KEY ( id_tingkat );", null);
 
         boolean ttransaksi = this.db.CUD("CREATE TABLE transaksi (" +
                 "id_transaksi          SERIAL NOT NULL," +
@@ -48,25 +48,25 @@ public class Setup {
                 "tanggal_pembayaran    TIMESTAMP NOT NULL DEFAULT now()," +
                 "dibayarkan            INTEGER NOT NULL," +
                 "pengguna_id_pengguna  INTEGER NOT NULL);" +
-                "ALTER TABLE transaksi ADD CONSTRAINT transaksi_pk PRIMARY KEY ( id_transaksi );");
+                "ALTER TABLE transaksi ADD CONSTRAINT transaksi_pk PRIMARY KEY ( id_transaksi );", null);
 
         boolean apengguna = this.db.CUD("ALTER TABLE pengguna\n" +
                 "ADD CONSTRAINT pengguna_tingkat_fk FOREIGN KEY ( tingkat_id_tingkat )\n" +
-                "REFERENCES tingkat ( id_tingkat );");
+                "REFERENCES tingkat ( id_tingkat );", null);
 
         boolean apesananMenu = this.db.CUD("ALTER TABLE pesanan\n" +
                 "ADD CONSTRAINT pesanan_daftar_menu_fk FOREIGN KEY ( daftar_menu_id_daftar_menu )\n" +
-                "REFERENCES daftar_menu ( id_daftar_menu );");
+                "REFERENCES daftar_menu ( id_daftar_menu );", null);
 
         boolean apesananTransaksi = this.db.CUD("ALTER TABLE pesanan\n" +
                 "ADD CONSTRAINT pesanan_transaksi_fk FOREIGN KEY ( transaksi_id_transaksi )\n" +
-                "REFERENCES transaksi ( id_transaksi );");
+                "REFERENCES transaksi ( id_transaksi );", null);
 
         boolean atransaksi = this.db.CUD("ALTER TABLE transaksi\n" +
                 "ADD CONSTRAINT transaksi_pengguna_fk FOREIGN KEY ( pengguna_id_pengguna )\n" +
-                "REFERENCES pengguna ( id_pengguna );");
+                "REFERENCES pengguna ( id_pengguna );", null);
 
-        boolean itingkat = this.db.CUD("insert into tingkat(hak_akses) values ('admin'), ('karyawan');");
+        boolean itingkat = this.db.CUD("insert into tingkat(hak_akses) values ('admin'), ('karyawan');", null);
 
         return exists && tmenu && tpegguna && tpesanan && ttingkat && ttransaksi && apengguna && apesananMenu
                 && apesananTransaksi && atransaksi && itingkat;
@@ -82,10 +82,9 @@ public class Setup {
         String namaUser = this.sc.nextLine();
         System.out.print("Masukkan password: ");
         String pswd = this.sc.nextLine();
-        String query = "insert into pengguna(nama, username, password, tingkat_id_tingkat)\n"
-                + "values ('%s', '%s', '%s', 1)";
-        query = String.format(query, nama, namaUser, pswd);
-        if (this.db.CUD(query)) {
+        String query = "insert into pengguna(nama, username, password, tingkat_id_tingkat) values (?, ?, ?, 1)";
+        Object[] x = new Object[] { nama, namaUser, pswd };
+        if (this.db.CUD(query, x)) {
             Fungsi.backToMenu("behasil setup !");
         } else {
             Fungsi.backToMenu("gagal setup !");
@@ -94,7 +93,7 @@ public class Setup {
 
     private boolean checkAdmin() {
         String query = "SELECT * FROM pengguna WHERE tingkat_id_tingkat = 1";
-        this.db.getData(query);
+        this.db.getData(query, null);
         if (this.db.getListData().size() > 0) {
             return false;
         }

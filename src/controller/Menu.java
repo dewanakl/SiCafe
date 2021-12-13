@@ -118,7 +118,8 @@ public class Menu {
             System.out.print(">> ");
             int sure = this.getInput();
             if (sure == 1) {
-                if (this.db.CUD("delete from daftar_menu where id_daftar_menu = " + idHapus)) {
+                Object[] x = new Object[] { idHapus };
+                if (this.db.CUD("delete from daftar_menu where id_daftar_menu = ?", x)) {
                     Fungsi.backToMenu("berhasil menghapus");
                 } else {
                     Fungsi.backToMenu("gagal menghapus");

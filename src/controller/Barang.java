@@ -15,17 +15,19 @@ public class Barang {
     }
 
     public void lihatBarang() {
-        this.db.getData("SELECT * FROM daftar_menu order by id_daftar_menu asc");
+        this.db.getData("SELECT * FROM daftar_menu order by id_daftar_menu asc", null);
         Fungsi.displayTabel(this.db.getListKolom(), this.db.getListData(), 2);
     }
 
     public void lihatBarang(int id) {
-        this.db.getData("SELECT * FROM daftar_menu WHERE id_daftar_menu = " + id);
+        Object[] x = new Object[] { id };
+        this.db.getData("SELECT * FROM daftar_menu WHERE id_daftar_menu = ?", x);
         Fungsi.displayTabel(this.db.getListKolom(), this.db.getListData(), 2);
     }
 
     public boolean cekBarang(int id) {
-        this.db.getData("SELECT * FROM daftar_menu WHERE id_daftar_menu = " + id);
+        Object[] x = new Object[] { id };
+        this.db.getData("SELECT * FROM daftar_menu WHERE id_daftar_menu = ?", x);
         if (this.db.getListData().isEmpty()) {
             return true;
         }
